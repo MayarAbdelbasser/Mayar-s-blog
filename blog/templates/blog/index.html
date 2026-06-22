@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% load static %}
+
+<!-- prettier-ignore -->
+
+{% block page_title %}
+Blog
+{% endblock page_title %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'blog/header.css' %}" />
+<link rel="stylesheet" href="{% static 'blog/main.css' %}" />
+{% endblock css_files %}
+
+<!-- prettier-ignore -->
+
+{% block content %}
+
+{% include "blog/includes/header.html" %}
+<div class="hero">
+  <p class="hero-header">PERSONAL NOTES / DESIGN / QUIET SYSTEMS</p>
+  <p class="hero-title special-font">
+    A calm corner for thoughtful notes on design, daily rituals, and building a
+    softer digital life.
+  </p>
+  <p class="hero-footer">
+    Hi, I'm Mayar. I write about the small details that make work, websites, and
+    everyday systems feel more intentional.
+  </p>
+</div>
+<div class="index-posts">
+  <h2 class="special-font">Latest Blogs</h2>
+  <div class="posts-wrapper grid">
+    {% for post in posts %}
+    <div class="card">
+      <div class="card-image-container">
+        <img
+          src="{% static 'blog/images/' %}{{post.img}}"
+          alt="Minimalist desk setup"
+          class="card-image"
+        />
+      </div>
+      <div class="card-content">
+        <p class="card-meta">
+          <span class="card-date">{{post.date}}</span>
+        </p>
+        <h3 class="card-title special-font">{{post.title}}</h3>
+        <p class="card-excerpt">{{post.content|first|truncatewords:20}}</p>
+        <a href="#" class="card-link">Read post &rarr;</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}
