@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponseNotFound
 from db import posts
+from django.template.loader import render_to_string
 
 
 # Create your views here.
 def index(request):
-    return render(request, "blog/index.html", {"posts": posts})
+    return render(request, "blog/index.html", {"posts": posts[0:3]})
 
 
 def show_posts(request):
@@ -13,4 +14,13 @@ def show_posts(request):
 
 
 def show_post(request, slug):
-    return HttpResponse("post")
+    context = {"post": None}
+    for post in posts:
+        if post["id"] == int(slug):
+            context["post"] = post
+            break
+    if context["post"] is None:
+        response_data = render_to_string("notfound.html")
+        return HttpResponseNotFound(response_data)
+
+    return render(request, "blog/post.html", context)

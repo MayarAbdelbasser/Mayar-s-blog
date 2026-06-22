@@ -1,0 +1,25 @@
+<!-- prettier-ignore -->
+
+{% extends "base.html" %} {% load static %}
+
+
+{% block page_title %}
+404 Not Found
+{% endblock page_title %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'blog/header.css' %}" />
+<link rel="stylesheet" href="{% static 'blog/main.css' %}" />
+{% endblock css_files %}
+
+<!-- prettier-ignore -->
+
+{% block content %}
+
+{% include "blog/includes/header.html" %}
+
+<h1 style="margin: 30px; text-align: center">
+  The page you are looking for does not exist.
+</h1>
+
+{% endblock content %}

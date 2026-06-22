@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% load static %}
+
+<!-- prettier-ignore -->
+
+{% block page_title %}
+Blog
+{% endblock page_title %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'blog/header.css' %}" />
+<link rel="stylesheet" href="{% static 'blog/post.css' %}" />
+{% endblock css_files %}
+
+<!-- prettier-ignore -->
+
+{% block content %}
+
+{% include "blog/includes/header.html" %}
+
+<article class="article-container">
+  <header class="article-header">
+    <h1 class="article-main-title">{{post.title}}</h1>
+    <div class="article-meta">
+      <span class="date">{{post.date}}</span>
+    </div>
+  </header>
+
+  <div class="article-featured-image">
+    <img
+      src="{% static 'blog/images/' %}{{post.img}}"
+      alt="Minimalist desk setup"
+    />
+  </div>
+
+  <div class="article-body">
+    <h2 class="body-title">{{post.title}}</h2>
+    {% for p in post.content %}
+    <p>{{p}}</p>
+    {% endfor %}
+  </div>
+</article>
+
+{% endblock content %}

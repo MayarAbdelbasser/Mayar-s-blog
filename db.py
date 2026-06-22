@@ -1,5 +1,6 @@
 posts = [
     {
+        "id": 1,
         "title": "A quieter way to work",
         "content": [
             "Some mornings begin better when the screen stays closed for a few minutes. A notebook, a warm drink, and one clear sentence can soften the rush of a busy day before it starts.",
@@ -10,6 +11,7 @@ posts = [
         "date": "Jun 18, 2026",
     },
     {
+        "id": 2,
         "title": "Designing for rhythm",
         "content": [
             "Good pages have tempo. A title asks for a pause, a paragraph carries the reader forward, and an image gives the eye a place to rest.",
@@ -20,6 +22,7 @@ posts = [
         "date": "Jun 12, 2026",
     },
     {
+        "id": 3,
         "title": "Digital notes that last",
         "content": [
             "A note becomes useful when future you can understand why it mattered. That means fewer folders, clearer titles, and writing ideas in complete sentences instead of fragments.",
@@ -30,6 +33,7 @@ posts = [
         "date": "Jun 4, 2026",
     },
     {
+        "id": 4,
         "title": "Soft focus, sharp intent",
         "content": [
             "Minimal design can still be warm. The trick is to let texture, contrast, and proportion do the expressive work instead of adding more decoration.",
@@ -40,6 +44,7 @@ posts = [
         "date": "MAY 28, 2026",
     },
     {
+        "id": 5,
         "title": "Weekend pages",
         "content": [
             "There is a special kind of joy in making small things without turning them into products. A page for a memory. A list for a season. A tiny archive for a year of reading.",
@@ -50,6 +55,7 @@ posts = [
         "date": "MAY 19, 2026",
     },
     {
+        "id": 6,
         "title": "Small systems for daily life",
         "content": [
             "The best systems are almost invisible. They reduce the number of decisions you need to make without taking away the feeling of choice.",

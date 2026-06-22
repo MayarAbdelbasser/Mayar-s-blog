@@ -31,7 +31,7 @@ Blog
   <h2 class="special-font">Latest Blogs</h2>
   <div class="posts-wrapper grid">
     {% for post in posts %}
-    <div class="card">
+    <div class="card" onclick="location.href='{% url 'post' post.id %}'">
       <div class="card-image-container">
         <img
           src="{% static 'blog/images/' %}{{post.img}}"
