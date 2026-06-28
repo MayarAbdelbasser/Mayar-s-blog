@@ -36,6 +36,7 @@ class Post(models.Model):
         null=False,
         db_index=True,
     )
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True)
 
     def get_absolute_url(self):
         return reverse("post-detail", args=[self.slug])
