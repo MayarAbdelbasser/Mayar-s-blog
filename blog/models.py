@@ -28,6 +28,12 @@ class Author(models.Model):
     def full_name(self):
         return f"{self.first_name.capitalize()} {self.last_name.capitalize()}"
 
+    def get_absolute_url(self):
+        return reverse(
+            "author-posts",
+            kwargs={"first_name": self.first_name, "last_name": self.last_name},
+        )
+
     def __str__(self):
         return self.full_name()
 

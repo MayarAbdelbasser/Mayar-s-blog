@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% load static %}
+
+<!-- prettier-ignore -->
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'blog/header.css' %}" />
+<link rel="stylesheet" href="{% static 'blog/main.css' %}" />
+{% endblock css_files %}
+
+<!-- prettier-ignore -->
+{% block page_title %} Posts by {{ author_name }} 
+
+{% endblock page_title %}
+
+<!-- prettier-ignore -->
+
+{% block content %} 
+
+{% include "blog/includes/header.html" %}
+
+<div class="index-posts flex">
+  <h2>Posts by <span class="special-font">{{ author_name }}</span></h2>
+
+  <div class="posts-wrapper grid">
+    {% for post in posts %} {% include "blog/includes/card.html" %} {% empty %}
+    <p>No posts found by this author.</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

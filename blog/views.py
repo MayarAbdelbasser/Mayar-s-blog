@@ -3,11 +3,11 @@ from django.http import HttpResponseNotFound
 
 # from db import posts
 from django.template.loader import render_to_string
-from .models import Post
+from .models import Post, Author
 
 
 def get_posts():
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by("-date")
     return posts
 
 
@@ -16,9 +16,15 @@ def get_post(slug):
     return post[0]
 
 
+def get_author_posts(first_name, last_name):
+    author = Author.objects.get(first_name=first_name, last_name=last_name)
+    posts = author.posts.all()
+    return posts
+
+
 # Create your views here.
 def index(request):
-    posts = get_posts().order_by("-date")[0:3]
+    posts = get_posts()[:3]
     return render(request, "blog/index.html", {"posts": posts[0:3]})
 
 
@@ -36,3 +42,18 @@ def show_post(request, slug):
         return HttpResponseNotFound(response_data)
 
     return render(request, "blog/post.html", {"post": post, "tags": tags})
+
+
+def show_author_posts(request, first_name, last_name):
+    try:
+        posts = get_author_posts(first_name, last_name)
+        author_name = first_name.capitalize() + " " + last_name.capitalize()
+    except:
+        response_data = render_to_string("notfound.html")
+        return HttpResponseNotFound(response_data)
+
+    return render(
+        request,
+        "blog/author-posts.html",
+        {"author_name": author_name, "posts": posts},
+    )

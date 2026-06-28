@@ -22,7 +22,10 @@ Blog
     <h1 class="article-main-title">{{post.title}}</h1>
     <div class="article-meta">
       {% if post.author %}
-      <span class="author">{{ post.author }}</span>
+      <a
+        href="{% url 'author-posts' first_name=post.author.first_name last_name=post.author.last_name %}"
+        ><span class="author">{{ post.author }}</span></a
+      >
       {% endif %}
       <span class="date">{{post.date}}</span>
       <div class="article-tags">
