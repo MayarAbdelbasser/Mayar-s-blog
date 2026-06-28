@@ -15,11 +15,10 @@ def show_posts(request):
 
 def show_post(request, slug):
     context = {"post": None}
-    for post in posts:
-        if post["id"] == int(slug):
-            context["post"] = post
-            break
-    if context["post"] is None:
+
+    try:
+        context["post"] = next(post for post in posts if post["id"] == int(slug))
+    except:
         response_data = render_to_string("notfound.html")
         return HttpResponseNotFound(response_data)
 
