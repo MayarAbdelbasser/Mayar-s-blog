@@ -4,6 +4,10 @@ from django.core.validators import RegexValidator
 
 
 # Create your models here.
+class Tag(models.Model):
+    caption = models.CharField(max_length=50)
+
+
 class Author(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -28,15 +32,13 @@ class Author(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=250, null=True)
     excerpt = models.CharField(max_length=250)
-    content = models.CharField(max_length=1000)
+    content = models.TextField()
     date = models.DateField(auto_now=False, auto_now_add=False)
     slug = models.SlugField(
-        default="",
-        blank=True,
-        null=False,
-        db_index=True,
+        default="", blank=True, null=False, db_index=True, unique=True
     )
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True)
+    tags = models.ManyToManyField(Tag)
 
     def get_absolute_url(self):
         return reverse("post-detail", args=[self.slug])
