@@ -12,7 +12,7 @@ def get_posts():
 
 
 def get_post(slug):
-    post = Post.objects.filter(slug=slug).values()
+    post = Post.objects.filter(slug=slug)
     return post[0]
 
 
@@ -29,8 +29,9 @@ def show_posts(request):
 def show_post(request, slug):
     try:
         post = get_post(slug)
+        tags = post.tags.all().values()
     except:
         response_data = render_to_string("notfound.html")
         return HttpResponseNotFound(response_data)
 
-    return render(request, "blog/post.html", {"post": post})
+    return render(request, "blog/post.html", {"post": post, "tags": tags})
