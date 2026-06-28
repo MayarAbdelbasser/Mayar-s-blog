@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinLengthValidator
 
 
 # Create your models here.
@@ -35,12 +35,14 @@ class Author(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=250, null=True)
     excerpt = models.CharField(max_length=250)
-    content = models.TextField()
+    content = models.TextField(validators=[MinLengthValidator(10)])
     date = models.DateField(auto_now=False, auto_now_add=False)
     slug = models.SlugField(
         default="", blank=True, null=False, db_index=True, unique=True
     )
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True)
+    author = models.ForeignKey(
+        Author, on_delete=models.SET_NULL, null=True, related_name="posts"
+    )
     tags = models.ManyToManyField(Tag)
     image = models.URLField(max_length=200, null=True)
 

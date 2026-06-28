@@ -7,7 +7,7 @@ from .models import Post
 
 
 def get_posts():
-    posts = Post.objects.all().values()
+    posts = Post.objects.all()
     return posts
 
 
@@ -18,11 +18,12 @@ def get_post(slug):
 
 # Create your views here.
 def index(request):
-    posts = get_posts()
+    posts = get_posts().order_by("-date")[0:3]
     return render(request, "blog/index.html", {"posts": posts[0:3]})
 
 
 def show_posts(request):
+    posts = get_posts().order_by("-date")
     return render(request, "blog/posts.html", {"posts": posts})
 
 

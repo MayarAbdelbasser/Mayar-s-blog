@@ -1,8 +1,5 @@
 {% load static %}
-<div
-  class="card"
-  onclick="location.href='{% url 'post-detail' slug=post.slug %}'"
->
+<div class="card" onclick="location.href='{{post.get_absolute_url}}'">
   <div class="card-image-container">
     <img src="{{post.image}}" alt="Minimalist desk setup" class="card-image" />
   </div>
