@@ -39,6 +39,7 @@ class Post(models.Model):
     )
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True)
     tags = models.ManyToManyField(Tag)
+    image = models.URLField(max_length=200, null=True)
 
     def get_absolute_url(self):
         return reverse("post-detail", args=[self.slug])
