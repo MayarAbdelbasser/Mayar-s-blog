@@ -21,6 +21,9 @@ Blog
   <header class="article-header">
     <h1 class="article-main-title">{{post.title}}</h1>
     <div class="article-meta">
+      {% if post.author %}
+      <span class="author">{{ post.author }}</span>
+      {% endif %}
       <span class="date">{{post.date}}</span>
       <div class="article-tags">
         <p>{{post.tags_set.all}}</p>

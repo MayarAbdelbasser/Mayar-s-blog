@@ -135,3 +135,8 @@
     padding: 3px 10px;
   }
 }
+.article-meta .author {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 14px;
+}
