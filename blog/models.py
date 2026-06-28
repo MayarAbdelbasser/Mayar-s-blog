@@ -7,6 +7,9 @@ from django.core.validators import RegexValidator
 class Tag(models.Model):
     caption = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.caption
+
 
 class Author(models.Model):
     first_name = models.CharField(max_length=50)

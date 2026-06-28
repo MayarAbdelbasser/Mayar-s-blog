@@ -26,17 +26,13 @@ Blog
   </header>
 
   <div class="article-featured-image">
-    <img
-      src="{% static 'blog/images/' %}{{post.img}}"
-      alt="Minimalist desk setup"
-    />
+    <img src="{{post.image}}" alt="Minimalist desk setup" />
   </div>
 
   <div class="article-body">
-    <h2 class="body-title">{{post.title}}</h2>
-    {% for p in post.content %}
-    <p>{{p}}</p>
-    {% endfor %}
+    <h2 class="body-title">{{post.excerpt}}</h2>
+    <!-- prettier-ignore -->
+    {{post.content|linebreaks }}
   </div>
 </article>
 
