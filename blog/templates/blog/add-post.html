@@ -1,0 +1,69 @@
+<!-- prettier-ignore -->
+
+{% extends "base.html" %} {% load static %}
+
+
+{% block page_title %}
+Add Post
+{% endblock page_title %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'blog/header.css' %}" />
+<link rel="stylesheet" href="{% static 'blog/main.css' %}" />
+<link rel="stylesheet" href="{% static 'blog/addpost.css' %}" />
+{% endblock css_files %}
+
+<!-- prettier-ignore -->
+{% block content %}
+
+{% include "blog/includes/header.html" %}
+
+<main class="form-page-wrapper">
+  <section class="w-hero">
+    <h1 class="hero-title">Create a New Post</h1>
+    <p class="hero-footer">
+      Share your latest thoughts, ideas, or stories with your readers.
+    </p>
+  </section>
+
+  <hr class="form-divider" />
+
+  <section class="form-container">
+    <form method="POST" novalidate>
+      {% csrf_token %} {% if form.non_field_errors %}
+      <div class="form-errors-global">
+        {% for error in form.non_field_errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+      {% endif %} {% for field in form %}
+      <div
+        class="form-control-group {% if field.errors %}has-errors{% endif %}"
+      >
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+        {{ field }} {% if field.help_text %}
+        <small class="form-help-text">{{ field.help_text }}</small>
+        {% endif %} {% if field.errors %}
+        <div class="form-field-errors">
+          {% for error in field.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Publish Post</button>
+        <a
+          href="{% url 'index' %}"
+          class="btn-cancel"
+          onclick="document.location.href = '{% url 'index' %}'"
+          >Cancel</a
+        >
+      </div>
+    </form>
+  </section>
+</main>
+{% endblock content %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponseRedirect
+from .forms import PostForm
 
 # from db import posts
 from django.template.loader import render_to_string
@@ -57,3 +58,17 @@ def show_author_posts(request, first_name, last_name):
         "blog/author-posts.html",
         {"author_name": author_name, "posts": posts},
     )
+
+
+def add_post(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.author = Author.objects.all()[0]
+            user.save()
+            return HttpResponseRedirect("/")
+    else:
+        form = PostForm()
+    return render(request, "blog/add-post.html", {"form": form})

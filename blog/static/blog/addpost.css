@@ -1,0 +1,172 @@
+/* --- Form Page Wrapper & Utilities --- */
+.form-page-wrapper {
+  padding: 20px 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-divider {
+  border: 0;
+  height: 1px;
+  background: #e0dedb;
+  margin: 40px 0;
+}
+
+/* --- Form Layout --- */
+.form-container {
+  max-width: 760px; /* Comfortable reading/typing width */
+  margin-bottom: 60px;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px; /* Matching the gap grid layout */
+}
+
+.form-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --- Labels & Controls --- */
+.form-control-group label {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Targeting standard Django output tags (input, textarea, select) */
+.form-control-group input[type="text"],
+.form-control-group input[type="url"],
+.form-control-group textarea,
+.form-control-group select {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  padding: 14px 18px;
+  color: #1a1a1a;
+  background-color: #faf9f7; /* Muted soft background */
+  border: 1px solid #d4cfc9;
+  border-radius: 12px; /* Smooth rounded corners like your cards */
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-control-group textarea {
+  min-height: 200px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Focus States */
+.form-control-group input:focus,
+.form-control-group textarea:focus,
+.form-control-group select:focus {
+  outline: none;
+  border-color: #1a1a1a;
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(26, 26, 26, 0.05);
+}
+
+/* Helper text */
+.form-help-text {
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  color: var(--brown-text);
+  font-weight: 300;
+}
+
+/* --- Action Buttons --- */
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 12px;
+}
+
+.btn-submit {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 30px; /* Matching card border-radius */
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+.btn-submit:hover {
+  background-color: #403e3b;
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+.btn-cancel {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--brown-text);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.btn-cancel:hover {
+  color: #1a1a1a;
+}
+
+/* --- Validation Error Styling --- */
+.form-field-errors {
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  color: #b1392b;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.has-errors input,
+.has-errors textarea {
+  border-color: #b1392b !important;
+  background-color: #fff9f8;
+}
+
+.form-errors-global {
+  background-color: #fff9f8;
+  border: 1px solid #b1392b;
+  padding: 16px;
+  border-radius: 12px;
+  color: #b1392b;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 600px) {
+  .form-page-wrapper {
+    padding: 15px;
+  }
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .btn-submit {
+    text-align: center;
+  }
+  .btn-cancel {
+    text-align: center;
+    padding: 10px;
+  }
+}

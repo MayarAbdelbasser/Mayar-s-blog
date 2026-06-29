@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.core.validators import RegexValidator, MinLengthValidator
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -42,7 +43,7 @@ class Post(models.Model):
     title = models.CharField(max_length=250, null=True)
     excerpt = models.CharField(max_length=250)
     content = models.TextField(validators=[MinLengthValidator(10)])
-    date = models.DateField(auto_now=False, auto_now_add=False)
+    date = models.DateField(auto_now=False, auto_now_add=True)
     slug = models.SlugField(
         default="", blank=True, null=False, db_index=True, unique=True
     )
@@ -51,6 +52,11 @@ class Post(models.Model):
     )
     tags = models.ManyToManyField(Tag)
     image = models.URLField(max_length=200, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("post-detail", args=[self.slug])

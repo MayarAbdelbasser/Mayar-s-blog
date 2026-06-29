@@ -9,6 +9,7 @@ Blog
 {% block css_files %}
 <link rel="stylesheet" href="{% static 'blog/header.css' %}" />
 <link rel="stylesheet" href="{% static 'blog/main.css' %}" />
+<link rel="stylesheet" href="{% static 'blog/addpost.css' %}" />
 {% endblock css_files %}
 
 <!-- prettier-ignore -->
@@ -28,7 +29,10 @@ Blog
   </p>
 </div>
 <div class="index-posts">
-  <h2 class="special-font">Latest Blogs</h2>
+  <div class="flex post-holder">
+    <h2 class="special-font">Latest Blogs</h2>
+    <a class="btn-submit" href="{% url 'add-post' %}">Add Post</a>
+  </div>
   <div class="posts-wrapper grid">
     {% for post in posts %} {% include "blog/includes/card.html" %} {% endfor %}
   </div>

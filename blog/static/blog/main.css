@@ -143,3 +143,12 @@
     font-size: 14px;
   }
 }
+
+.post-holder {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.post-holder a {
+  background-color: var(--brown-text);
+}
