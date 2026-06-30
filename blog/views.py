@@ -25,7 +25,7 @@ def get_author_posts(first_name, last_name):
 
 # Create your views here.
 def index(request):
-    posts = get_posts()[:3]
+    posts = get_posts()[:3].values()
     return render(request, "blog/index.html", {"posts": posts[0:3]})
 
 
@@ -72,3 +72,11 @@ def add_post(request):
     else:
         form = PostForm()
     return render(request, "blog/add-post.html", {"form": form})
+
+
+def notfound(request, random):
+    try:
+        int("hello")
+    except:
+        response_data = render_to_string("notfound.html")
+        return HttpResponseNotFound(response_data)
