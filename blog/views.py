@@ -4,6 +4,11 @@ from .forms import PostForm
 
 # from db import posts
 from django.template.loader import render_to_string
+from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+
 from .models import Post, Author
 
 
@@ -24,59 +29,90 @@ def get_author_posts(first_name, last_name):
 
 
 # Create your views here.
-def index(request):
-    posts = get_posts()[:3].values()
-    return render(request, "blog/index.html", {"posts": posts[0:3]})
+class IndexView(TemplateView):
+    template_name = "blog/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["posts"] = get_posts()[:3]
+        return context
 
 
-def show_posts(request):
-    posts = get_posts().order_by("-date")
-    return render(request, "blog/posts.html", {"posts": posts})
+class AllPostsView(ListView):
+    template_name = "blog/posts.html"
+    model = Post
+    context_object_name = "posts"
 
 
-def show_post(request, slug):
-    try:
-        post = get_post(slug)
-        tags = post.tags.all().values()
-    except:
-        response_data = render_to_string("notfound.html")
-        return HttpResponseNotFound(response_data)
-
-    return render(request, "blog/post.html", {"post": post, "tags": tags})
+class PostView(DetailView):
+    template_name = "blog/post.html"
+    model = Post
 
 
-def show_author_posts(request, first_name, last_name):
-    try:
-        posts = get_author_posts(first_name, last_name)
-        author_name = first_name.capitalize() + " " + last_name.capitalize()
-    except:
-        response_data = render_to_string("notfound.html")
-        return HttpResponseNotFound(response_data)
+class AuthorPostsView(TemplateView):
+    template_name = "blog/author-posts.html"
 
-    return render(
-        request,
-        "blog/author-posts.html",
-        {"author_name": author_name, "posts": posts},
-    )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        first_name = self.kwargs.get("first_name")
+        last_name = self.kwargs.get("last_name")
+        context["posts"] = get_author_posts(first_name, last_name)
+        context["author_name"] = first_name.capitalize() + " " + last_name.capitalize()
+        return context
 
 
-def add_post(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.author = Author.objects.all()[0]
-            user.save()
-            return HttpResponseRedirect("/")
-    else:
-        form = PostForm()
-    return render(request, "blog/add-post.html", {"form": form})
+class AddPostView(CreateView):
+    form_class = PostForm
+    template_name = "blog/add-post.html"
+    model = Post
+    success_url = "/posts"
 
 
-def notfound(request, random):
-    try:
-        int("hello")
-    except:
-        response_data = render_to_string("notfound.html")
-        return HttpResponseNotFound(response_data)
+# def add_post(request):
+#     if request.method == "POST":
+#         form = PostForm(request.POST)
+
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             user.author = Author.objects.all()[0]
+#             user.save()
+#             return HttpResponseRedirect("/")
+#     else:
+#         form = PostForm()
+#     return render(request, "blog/add-post.html", {"form": form})
+
+
+# def index(request):
+#     posts = get_posts()[:3].values()
+#     return render(request, "blog/index.html", {"posts": posts[0:3]})
+
+
+# def show_posts(request):
+#     posts = get_posts().order_by("-date")
+#     return render(request, "blog/posts.html", {"posts": posts})
+
+
+# def show_post(request, slug):
+#     try:
+#         post = get_post(slug)
+#         tags = post.tags.all().values()
+#     except:
+#         response_data = render_to_string("notfound.html")
+#         return HttpResponseNotFound(response_data)
+
+#     return render(request, "blog/post.html", {"post": post, "tags": tags})
+
+
+# def show_author_posts(request, first_name, last_name):
+#     try:
+#         posts = get_author_posts(first_name, last_name)
+#         author_name = first_name.capitalize() + " " + last_name.capitalize()
+#     except:
+#         response_data = render_to_string("notfound.html")
+#         return HttpResponseNotFound(response_data)
+
+#     return render(
+#         request,
+#         "blog/author-posts.html",
+#         {"author_name": author_name, "posts": posts},
+#     )

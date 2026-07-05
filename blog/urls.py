@@ -2,10 +2,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.index, name="index"),
-    path("posts", views.show_posts, name="posts"),
-    path("add-post", views.add_post, name="add-post"),
-    path("posts/<slug>", views.show_post, name="post-detail"),
-    path("<first_name>-<last_name>", views.show_author_posts, name="author-posts"),
-    path("<random>", views.notfound, name="not-found"),
+    path("", views.IndexView.as_view(), name="index"),
+    path("posts", views.AllPostsView.as_view(), name="posts"),
+    path("posts/add", views.AddPostView.as_view(), name="add-post"),
+    path("posts/<pk>", views.PostView.as_view(), name="post-detail"),
+    path(
+        "<first_name>-<last_name>", views.AuthorPostsView.as_view(), name="author-posts"
+    ),
 ]

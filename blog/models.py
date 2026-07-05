@@ -45,7 +45,7 @@ class Post(models.Model):
     content = models.TextField(validators=[MinLengthValidator(10)])
     date = models.DateField(auto_now=False, auto_now_add=True)
     slug = models.SlugField(
-        default="", blank=True, null=False, db_index=True, unique=True
+        default="", blank=True, null=False, db_index=True, unique=True, primary_key=True
     )
     author = models.ForeignKey(
         Author, on_delete=models.SET_NULL, null=True, related_name="posts"
