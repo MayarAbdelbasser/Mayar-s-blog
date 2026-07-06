@@ -51,7 +51,7 @@ class Post(models.Model):
         Author, on_delete=models.SET_NULL, null=True, related_name="posts"
     )
     tags = models.ManyToManyField(Tag)
-    image = models.URLField(max_length=200, null=True)
+    image = models.ImageField(upload_to="images", null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:

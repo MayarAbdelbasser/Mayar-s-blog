@@ -29,7 +29,7 @@ Add Post
   <hr class="form-divider" />
 
   <section class="form-container">
-    <form method="POST" novalidate>
+    <form method="POST" novalidate enctype="multipart/form-data">
       {% csrf_token %} {% if form.non_field_errors %}
       <div class="form-errors-global">
         {% for error in form.non_field_errors %}

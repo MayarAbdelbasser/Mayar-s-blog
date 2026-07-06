@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseNotFound, HttpResponseRedirect
 from .forms import PostForm
+from django.urls import reverse
 
 # from db import posts
 from django.template.loader import render_to_string
@@ -65,7 +66,9 @@ class AddPostView(CreateView):
     form_class = PostForm
     template_name = "blog/add-post.html"
     model = Post
-    success_url = "/posts"
+
+    def get_success_url(self):
+        return reverse("post-detail", args=(self.object.pk,))
 
 
 # def add_post(request):
