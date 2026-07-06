@@ -204,3 +204,15 @@
     padding: 10px;
   }
 }
+
+.image-holder {
+  margin-top: 10px;
+}
+.image-holder img {
+  max-width: 200px;
+  max-height: 200px;
+  display: none;
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 5px;
+}
