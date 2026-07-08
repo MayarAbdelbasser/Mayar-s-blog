@@ -9,6 +9,8 @@ urlpatterns = [
     path("", views.getRoutes),
     path("posts", views.getPosts),
     path("posts/<str:pk>", views.getPost),
+    path("users/register/", views.register, name="register"),
+    path("users/login/", views.login, name="login"),
     path("users/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("users/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]

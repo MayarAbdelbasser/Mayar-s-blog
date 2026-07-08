@@ -13,6 +13,7 @@ class Tag(models.Model):
 
 
 class Author(models.Model):
+    username = models.CharField(max_length=50, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email_address = models.EmailField(
@@ -25,6 +26,7 @@ class Author(models.Model):
             )
         ],
     )
+    password = models.CharField(max_length=20, null=True)
 
     def full_name(self):
         return f"{self.first_name.capitalize()} {self.last_name.capitalize()}"
