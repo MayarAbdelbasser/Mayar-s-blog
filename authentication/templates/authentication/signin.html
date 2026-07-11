@@ -1,0 +1,58 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in</title>
+    <link rel="stylesheet" href="{% static 'authentication/auth.css' %}" />
+  </head>
+  <body class="auth-page">
+    <div class="auth-card">
+      <p class="auth-eyebrow">Welcome back</p>
+      <h1 class="auth-title">Sign in</h1>
+      <p class="auth-subtitle">
+        Continue reading and keep your quiet corner close.
+      </p>
+
+      {% if form.errors %}
+      <div class="auth-errors">
+        Your email or password didn't match. Try again.
+      </div>
+      {% endif %}
+
+      <form method="post" action="{% url 'signin' %}" novalidate>
+        {% csrf_token %}
+
+        <div class="auth-field">
+          <label for="id_email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="id_email"
+            placeholder="mayar@example.com"
+            required
+            autofocus
+          />
+        </div>
+
+        <div class="auth-field">
+          <label for="id_password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="id_password"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+
+        <button type="submit" class="auth-submit">Sign in</button>
+      </form>
+
+      <p class="auth-switch">
+        New here? <a href="{% url 'signup' %}">Create an account</a>
+      </p>
+    </div>
+  </body>
+</html>

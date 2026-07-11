@@ -1,0 +1,69 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create account</title>
+    <link rel="stylesheet" href="{% static 'authentication/auth.css' %}" />
+  </head>
+  <body class="auth-page">
+    <div class="auth-card">
+      <p class="auth-eyebrow">Start reading</p>
+      <h1 class="auth-title">Create account</h1>
+      <p class="auth-subtitle">
+        Join the blog for new essays, notes, and personal updates.
+      </p>
+
+      {% if form.errors %}
+      <div class="auth-errors">
+        Please fix the highlighted fields and try again.
+      </div>
+      {% endif %}
+
+      <form method="post" action="{% url 'signup' %}" novalidate>
+        {% csrf_token %}
+
+        <div class="auth-field">
+          <label for="id_name">Name</label>
+          <input
+            type="text"
+            name="name"
+            id="id_name"
+            placeholder="Mayar Abd Elbasser"
+            required
+            autofocus
+          />
+        </div>
+
+        <div class="auth-field">
+          <label for="id_email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="id_email"
+            placeholder="mayar@example.com"
+            required
+          />
+        </div>
+
+        <div class="auth-field">
+          <label for="id_password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="id_password"
+            placeholder="Choose a password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="auth-submit">Create account</button>
+      </form>
+
+      <p class="auth-switch">
+        Already have an account? <a href="{% url 'signin' %}">Sign in</a>
+      </p>
+    </div>
+  </body>
+</html>
