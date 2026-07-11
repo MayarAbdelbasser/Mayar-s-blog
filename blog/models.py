@@ -13,7 +13,6 @@ class Tag(models.Model):
 
 
 class Author(models.Model):
-    username = models.CharField(max_length=50, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email_address = models.EmailField(
