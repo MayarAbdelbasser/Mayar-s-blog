@@ -45,6 +45,21 @@ def createPost(request):
     return Response(serialized_posts.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def deletePost(request):
+    try:
+        post = Post.objects.get(slug=request.data["post_slug"])
+
+    except Post.DoesNotExist:
+        return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    post.delete()
+    return Response(
+        {"message": "Post deleted successfully"}, status=status.HTTP_204_NO_CONTENT
+    )
+
+
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def register(request):
