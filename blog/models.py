@@ -42,7 +42,7 @@ class Author(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=250, null=True)
+    title = models.CharField(max_length=250)
     excerpt = models.CharField(max_length=250)
     content = models.TextField(validators=[MinLengthValidator(10)])
     date = models.DateField(auto_now=False, auto_now_add=True)

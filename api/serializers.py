@@ -15,8 +15,14 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = AuthorSerializer(many=False)
-    tags = TagSerializer(many=True)
+    author_id = serializers.PrimaryKeyRelatedField(
+        queryset=Author.objects.all(), source="author"
+    )
+    author = AuthorSerializer(many=False, read_only=True)
+    tags_id = serializers.PrimaryKeyRelatedField(
+        queryset=Tag.objects.all(), source="tags", many=True, write_only=True
+    )
+    tags = TagSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post

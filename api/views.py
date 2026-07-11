@@ -1,4 +1,4 @@
-from .serializers import PostSerializer
+from .serializers import PostSerializer, AuthorSerializer, TagSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -14,8 +14,7 @@ def getRoutes(request):
     return Response(routes)
 
 
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@api_view(["GET", "POST"])
 def getPosts(request):
     posts = Post.objects.all()
     serialized_posts = PostSerializer(posts, many=True)
@@ -27,6 +26,23 @@ def getPost(request, pk):
     post = Post.objects.get(slug=pk)
     post = PostSerializer(post)
     return Response(post.data)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def createPost(request):
+    serialized_posts = PostSerializer(
+        data=request.data,
+    )
+
+    if serialized_posts.is_valid():
+        serialized_posts.save()
+        return Response(
+            {"message": "Post created successfully", "data": serialized_posts.data},
+            status=status.HTTP_201_CREATED,
+        )
+
+    return Response(serialized_posts.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["POST"])
