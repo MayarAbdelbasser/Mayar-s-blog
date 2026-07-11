@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Post, Author
 
@@ -66,6 +66,19 @@ class AddPostView(CreateView):
     form_class = PostForm
     template_name = "blog/add-post.html"
     model = Post
+
+    def get_success_url(self):
+        return reverse("post-detail", args=(self.object.pk,))
+
+
+class UpdatePostView(UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = "blog/add-post.html"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(pk=self.kwargs["pk"])
 
     def get_success_url(self):
         return reverse("post-detail", args=(self.object.pk,))
