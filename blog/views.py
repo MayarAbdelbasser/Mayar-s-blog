@@ -11,7 +11,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Post, Author
-from .mixins import JWTRequiredMixin
+from .mixins import JWTRequiredMixin, AuthVerifiedMixin
 
 
 def get_posts():
@@ -30,13 +30,21 @@ def get_author_posts(first_name, last_name):
     return posts
 
 
+def logout(request):
+    del request.session["access_token"]
+    del request.session["refresh_token"]
+    return HttpResponseRedirect(reverse("index"))
+
+
 # Create your views here.
-class IndexView(TemplateView):
+class IndexView(AuthVerifiedMixin, TemplateView):
     template_name = "blog/index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["posts"] = get_posts()[:3]
+        context["is_authenticated"] = self.is_Authenticated
+        print(context["is_authenticated"])
         return context
 
 
