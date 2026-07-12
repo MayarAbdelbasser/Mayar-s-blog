@@ -1,4 +1,4 @@
-from .serializers import PostSerializer, AuthorSerializer, TagSerializer
+from .serializers import PostSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -105,6 +105,10 @@ def login(request):
 
     refresh = RefreshToken.for_user(author)
     access_token = str(refresh.access_token)
+
+    # store access token and refresh token in session
+    request.session["access_token"] = access_token
+    request.session["refresh_token"] = str(refresh)
     return Response(
         {"access": access_token, "refresh": str(refresh)}, status=status.HTTP_200_OK
     )

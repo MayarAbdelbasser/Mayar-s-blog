@@ -11,6 +11,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Post, Author
+from .mixins import JWTRequiredMixin
 
 
 def get_posts():
@@ -62,12 +63,22 @@ class AuthorPostsView(TemplateView):
         return context
 
 
-class AddPostView(CreateView):
+class AddPostView(JWTRequiredMixin, CreateView):
     form_class = PostForm
     template_name = "blog/add-post.html"
     model = Post
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.author = self.request.user
+        self.object.save()
+
+        success_url = self.get_success_url()
+
+        return super().form_valid(form)
+
     def get_success_url(self):
+        print(self.object)
         return reverse("post-detail", args=(self.object.pk,))
 
 
