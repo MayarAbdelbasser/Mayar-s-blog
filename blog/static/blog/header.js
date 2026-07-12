@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
           });
 
           if (result.isConfirmed) {
+            localStorage.removeItem("author_id");
             window.location.href = logoutUrl;
           }
         } catch (err) {

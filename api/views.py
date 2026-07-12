@@ -110,5 +110,6 @@ def login(request):
     request.session["access_token"] = access_token
     request.session["refresh_token"] = str(refresh)
     return Response(
-        {"access": access_token, "refresh": str(refresh)}, status=status.HTTP_200_OK
+        {"access": access_token, "refresh": str(refresh), "author_id": author.id},
+        status=status.HTTP_200_OK,
     )

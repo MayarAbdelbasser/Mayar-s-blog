@@ -50,8 +50,7 @@ document
       // 4. Handle Backend Response
       if (response.ok) {
         // Success: Save tokens to localStorage (or cookies) to use them in future requests
-        localStorage.setItem("access_token", data.access);
-        localStorage.setItem("refresh_token", data.refresh);
+        localStorage.setItem("author_id", data.author_id);
 
         Swal.fire({
           icon: "success",
