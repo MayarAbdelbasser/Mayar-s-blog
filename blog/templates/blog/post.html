@@ -20,19 +20,38 @@ Blog
 <article class="article-container">
   <header class="article-header">
     <h1 class="article-main-title">{{post.title}}</h1>
-    <div class="article-meta">
-      {% if post.author %}
-      <a
-        href="{% url 'author-posts' first_name=post.author.first_name last_name=post.author.last_name %}"
-        ><span class="author">{{ post.author }}</span></a
+
+    <!-- عملنا كونتينر يجمع الميتا مع الزرار الجديد -->
+    <div class="article-meta-container">
+      <div class="article-meta">
+        {% if post.author %}
+        <a
+          href="{% url 'author-posts' first_name=post.author.first_name last_name=post.author.last_name %}"
+        >
+          <span class="author">{{ post.author }}</span>
+        </a>
+        {% endif %}
+        <span class="date">{{post.date}}</span>
+        <div class="article-tags">
+          {% for tag in post.tags.all %}
+          <span class="tag">{{ tag.caption }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div
+        class="post-options-dropdown"
+        id="optionsDropdown"
+        data-author-id="{{ post.author.id }}"
       >
-      {% endif %}
-      <span class="date">{{post.date}}</span>
-      <div class="article-tags">
-        <p>{{post.tags_set.all}}</p>
-        {% for tag in post.tags.all %}
-        <span class="tag">{{ tag.caption }}</span>
-        {% endfor %}
+        <button class="dropdown-toggle" id="dropdownBtn">&#8942;</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="{% url 'post-update' post.slug %}" id="editLink"
+            >Edit Post</a
+          >
+          <a href="#" id="deleteLink" style="color: red">Delete Post</a>
+          <a href="#" id="readLaterLink">Read Later</a>
+        </div>
       </div>
     </div>
   </header>
