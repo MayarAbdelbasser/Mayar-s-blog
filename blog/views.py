@@ -73,8 +73,6 @@ class AddPostView(JWTRequiredMixin, CreateView):
         self.object.author = self.request.user
         self.object.save()
 
-        success_url = self.get_success_url()
-
         return super().form_valid(form)
 
     def get_success_url(self):

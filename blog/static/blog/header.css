@@ -8,3 +8,43 @@ nav {
   font-weight: bold;
   font-size: 24px;
 }
+
+nav div {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+nav div a {
+  color: var(--brown-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+nav div a:hover {
+  color: var(--ink);
+}
+
+nav div button {
+  background-color: var(--ink);
+  color: var(--paper-surface);
+  border: 1px solid var(--ink);
+  padding: 0.5rem 1.25rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+nav div button:hover {
+  background-color: transparent;
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+nav div button:active {
+  transform: translateY(0);
+}
