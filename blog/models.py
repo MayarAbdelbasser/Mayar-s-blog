@@ -15,7 +15,7 @@ class Tag(models.Model):
 class Author(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email_address = models.EmailField(
+    email = models.EmailField(
         max_length=254,
         validators=[
             RegexValidator(

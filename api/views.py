@@ -63,22 +63,22 @@ def deletePost(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def register(request):
-    username = request.data.get("username")
+    email = request.data.get("email")
     password = request.data.get("password")
     first_name = request.data.get("first_name")
     last_name = request.data.get("last_name")
 
-    if not username or not password or not first_name or not last_name:
+    if not email or not password or not first_name or not last_name:
         return Response(
-            {"error": "Username, first name, last name and password are required."},
+            {"error": "email, first name, last name and password are required."},
             status=status.HTTP_400_BAD_REQUEST,
         )
-    if Author.objects.filter(username=username).exists():
+    if Author.objects.filter(email=email).exists():
         return Response(
-            {"error": "Username is already exists."}, status=status.HTTP_400_BAD_REQUEST
+            {"error": "email is already exists."}, status=status.HTTP_400_BAD_REQUEST
         )
     author = Author.objects.create(
-        username=username, password=password, first_name=first_name, last_name=last_name
+        email=email, password=password, first_name=first_name, last_name=last_name
     )
     return Response(
         {"message": "User created successfully"}, status=status.HTTP_201_CREATED
@@ -88,16 +88,16 @@ def register(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def login(request):
-    username = request.data.get("username")
+    email = request.data.get("email")
     password = request.data.get("password")
-    if not username or not password:
+    if not email or not password:
         return Response(
-            {"error": "Username and password are required."},
+            {"error": "email and password are required."},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
     try:
-        author = Author.objects.get(username=username, password=password)
+        author = Author.objects.get(email=email, password=password)
     except Author.DoesNotExist:
         return Response(
             {"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED

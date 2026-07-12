@@ -15,7 +15,7 @@ class PostAdmin(admin.ModelAdmin):
 class AuthorAdmin(admin.ModelAdmin):
     list_display = (
         Author.full_name,
-        "email_address",
+        "email",
     )
 
 

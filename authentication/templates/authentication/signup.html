@@ -15,24 +15,36 @@
         Join the blog for new essays, notes, and personal updates.
       </p>
 
-      {% if form.errors %}
-      <div class="auth-errors">
-        Please fix the highlighted fields and try again.
-      </div>
-      {% endif %}
+      <div id="signup-message" class="auth-errors" hidden></div>
 
-      <form method="post" action="{% url 'signup' %}" novalidate>
+      <form
+        id="signup-form"
+        method="post"
+        action="{% url 'signup' %}"
+        novalidate
+      >
         {% csrf_token %}
 
         <div class="auth-field">
-          <label for="id_name">Name</label>
+          <label for="id_first_name">First name</label>
           <input
             type="text"
-            name="name"
-            id="id_name"
-            placeholder="Mayar Abd Elbasser"
+            name="first_name"
+            id="id_first_name"
+            placeholder="Mayar"
             required
             autofocus
+          />
+        </div>
+
+        <div class="auth-field">
+          <label for="id_last_name">Last name</label>
+          <input
+            type="text"
+            name="last_name"
+            id="id_last_name"
+            placeholder="Abd Elbasser"
+            required
           />
         </div>
 
@@ -55,6 +67,7 @@
             id="id_password"
             placeholder="Choose a password"
             required
+            autocomplete="new-password"
           />
         </div>
 
@@ -65,5 +78,8 @@
         Already have an account? <a href="{% url 'signin' %}">Sign in</a>
       </p>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'authentication/auth.js' %}"></script>
+    <script src="{% static 'authentication/signup.js' %}"></script>
   </body>
 </html>
