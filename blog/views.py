@@ -44,22 +44,31 @@ class IndexView(AuthVerifiedMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["posts"] = get_posts()[:3]
         context["is_authenticated"] = self.is_Authenticated
-        print(context["is_authenticated"])
         return context
 
 
-class AllPostsView(ListView):
+class AllPostsView(AuthVerifiedMixin, ListView):
     template_name = "blog/posts.html"
     model = Post
     context_object_name = "posts"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_authenticated"] = self.is_Authenticated
+        return context
 
-class PostView(DetailView):
+
+class PostView(AuthVerifiedMixin, DetailView):
     template_name = "blog/post.html"
     model = Post
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_authenticated"] = self.is_Authenticated
+        return context
 
-class AuthorPostsView(TemplateView):
+
+class AuthorPostsView(AuthVerifiedMixin, TemplateView):
     template_name = "blog/author-posts.html"
 
     def get_context_data(self, **kwargs):
@@ -68,10 +77,11 @@ class AuthorPostsView(TemplateView):
         last_name = self.kwargs.get("last_name")
         context["posts"] = get_author_posts(first_name, last_name)
         context["author_name"] = first_name.capitalize() + " " + last_name.capitalize()
+        context["is_authenticated"] = self.is_Authenticated
         return context
 
 
-class AddPostView(JWTRequiredMixin, CreateView):
+class AddPostView(JWTRequiredMixin, AuthVerifiedMixin, CreateView):
     form_class = PostForm
     template_name = "blog/add-post.html"
     model = Post
@@ -83,12 +93,16 @@ class AddPostView(JWTRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_authenticated"] = self.is_Authenticated
+        return context
+
     def get_success_url(self):
-        print(self.object)
         return reverse("post-detail", args=(self.object.pk,))
 
 
-class UpdatePostView(UpdateView):
+class UpdatePostView(JWTRequiredMixin, AuthVerifiedMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = "blog/add-post.html"
@@ -96,6 +110,15 @@ class UpdatePostView(UpdateView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(pk=self.kwargs["pk"])
+
+    def form_valid(self, form):
+        print(self.object.author.id)
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_authenticated"] = self.is_Authenticated
+        return context
 
     def get_success_url(self):
         return reverse("post-detail", args=(self.object.pk,))
