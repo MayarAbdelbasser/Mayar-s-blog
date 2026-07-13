@@ -7,6 +7,12 @@ from blog.models import Post, Author
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def test_user(request):
+    return Response({"current_user_id": request.user.id, "email": request.user.email})
+
+
 # specify request method
 @api_view(["GET"])
 def getRoutes(request):
@@ -47,9 +53,9 @@ def createPost(request):
 
 @api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
-def deletePost(request):
+def deletePost(request, pk):
     try:
-        post = Post.objects.get(slug=request.data["post_slug"])
+        post = Post.objects.get(slug=pk)
 
     except Post.DoesNotExist:
         return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -110,6 +116,12 @@ def login(request):
     request.session["access_token"] = access_token
     request.session["refresh_token"] = str(refresh)
     return Response(
-        {"access": access_token, "refresh": str(refresh), "author_id": author.id},
+        {
+            "access": access_token,
+            "refresh": str(refresh),
+            "author_id": author.id,
+            "first_name": author.first_name,
+            "last_name": author.last_name,
+        },
         status=status.HTTP_200_OK,
     )

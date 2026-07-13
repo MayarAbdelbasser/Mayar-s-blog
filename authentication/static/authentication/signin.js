@@ -50,6 +50,8 @@ document
       // 4. Handle Backend Response
       if (response.ok) {
         // Success: Save tokens to localStorage (or cookies) to use them in future requests
+        localStorage.setItem("author_first_name", data.first_name);
+        localStorage.setItem("author_last_name", data.last_name);
         localStorage.setItem("author_id", data.author_id);
         localStorage.setItem("token", data.access);
 

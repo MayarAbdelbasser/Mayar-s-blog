@@ -7,9 +7,10 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path("", views.getRoutes),
+    path("test", views.test_user),
     path("posts", views.getPosts),
     path("posts/create/", views.createPost),
-    path("posts/delete/", views.deletePost),
+    path("posts/delete/<str:pk>", views.deletePost),
     path("posts/<str:pk>", views.getPost),
     path("users/register/", views.register, name="register"),
     path("users/login/", views.login, name="login"),

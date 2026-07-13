@@ -22,6 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
           if (result.isConfirmed) {
             localStorage.removeItem("author_id");
+            localStorage.removeItem("token");
+            localStorage.removeItem("author_first_name");
+            localStorage.removeItem("author_last_name");
             window.location.href = logoutUrl;
           }
         } catch (err) {

@@ -3,8 +3,25 @@ from django.urls import reverse
 from django.core.validators import RegexValidator, MinLengthValidator
 from django.utils.text import slugify
 
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 # Create your models here.
+
+
+# to change the default user from User model to Author model
+class AuthorManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("The Email field must be set")
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+
+        user.set_password(password)
+
+        user.save(using=self._db)
+        return user
+
+
 class Tag(models.Model):
     caption = models.CharField(max_length=50)
 
@@ -12,11 +29,12 @@ class Tag(models.Model):
         return self.caption
 
 
-class Author(models.Model):
+class Author(AbstractBaseUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(
         max_length=254,
+        unique=True,
         validators=[
             RegexValidator(
                 regex=r"((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$",
@@ -26,6 +44,13 @@ class Author(models.Model):
         ],
     )
     password = models.CharField(max_length=128, null=True)
+
+    objects = AuthorManager()
+
+    is_active = models.BooleanField(default=True)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["first_name", "last_name"]
 
     def full_name(self):
         return f"{self.first_name.capitalize()} {self.last_name.capitalize()}"

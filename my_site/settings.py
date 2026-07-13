@@ -170,3 +170,9 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 MEDIA_ROOT = BASE_DIR / "uploads"
 
 MEDIA_URL = "/user-media/"
+
+AUTH_USER_MODEL = "blog.Author"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",  # الافتراضي لجانجو
+]

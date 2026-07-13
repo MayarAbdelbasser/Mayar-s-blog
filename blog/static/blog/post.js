@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        // جلب التوكن وتأكدي من الاسم المخزن في الـ localStorage
         const token = localStorage.getItem("token");
 
         if (!token) {
@@ -53,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
             text: "You are not logged in. Please log in first.",
             icon: "error",
           });
-          return; // بنوقف هنا لو مفيش توكن أصلاً في المتصفح
+          return;
         }
 
         fetch("/api/posts/delete", {
