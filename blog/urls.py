@@ -11,4 +11,5 @@ urlpatterns = [
         "<first_name>-<last_name>", views.AuthorPostsView.as_view(), name="author-posts"
     ),
     path("logout", views.logout, name="logout"),
+    path("<str:word>", views.notFound),
 ]

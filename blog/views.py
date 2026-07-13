@@ -36,13 +36,30 @@ def logout(request):
     return HttpResponseRedirect(reverse("index"))
 
 
+def notFound(request, word):
+    return render(request, "notfound.html")
+
+
 # Create your views here.
+
+
 class IndexView(AuthVerifiedMixin, TemplateView):
     template_name = "blog/index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["posts"] = get_posts()[:3]
+        context["is_authenticated"] = self.is_Authenticated
+        return context
+
+
+class AllPostsView(AuthVerifiedMixin, ListView):
+    template_name = "blog/posts.html"
+    model = Post
+    context_object_name = "posts"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context["is_authenticated"] = self.is_Authenticated
         return context
 
