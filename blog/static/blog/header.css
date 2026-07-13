@@ -48,3 +48,7 @@ nav div button:hover {
 nav div button:active {
   transform: translateY(0);
 }
+
+.my_posts {
+  cursor: pointer;
+}

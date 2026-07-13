@@ -1,5 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
   const authBtn = document.getElementById("auth-btn");
+  const myPostsBtn = document.querySelector(".my_posts");
+
+  if (myPostsBtn) {
+    myPostsBtn.addEventListener("click", () => {
+      first_name = localStorage.getItem("author_first_name");
+      last_name = localStorage.getItem("author_last_name");
+      window.location.href = `${first_name}-${last_name}`;
+    });
+  }
 
   if (authBtn) {
     authBtn.addEventListener("click", async function () {
