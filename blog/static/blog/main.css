@@ -152,3 +152,12 @@
 .post-holder a {
   background-color: var(--brown-text);
 }
+
+.flex-column {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-column a {
+  background-color: var(--brown-text);
+}

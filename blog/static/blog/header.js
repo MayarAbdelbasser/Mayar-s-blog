@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     myPostsBtn.addEventListener("click", () => {
       first_name = localStorage.getItem("author_first_name");
       last_name = localStorage.getItem("author_last_name");
-      window.location.href = `${first_name}-${last_name}`;
+      window.location.href = `http://127.0.0.1:8000/${first_name}-${last_name}`;
     });
   }
 

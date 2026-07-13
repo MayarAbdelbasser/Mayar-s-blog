@@ -32,7 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
   deleteLink.addEventListener("click", function (e) {
     e.preventDefault();
 
-    const postSlug = "{{ post.slug }}";
+    const postSlug = slug.textContent;
+    console.log(postSlug);
 
     Swal.fire({
       title: "Are you sure?",
@@ -55,15 +56,12 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        fetch("/api/posts/delete", {
+        fetch(`/api/posts/delete/${postSlug}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            post_slug: postSlug,
-          }),
         })
           .then((response) => {
             if (response.status === 204) {
@@ -72,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 text: "Your post has been deleted successfully.",
                 icon: "success",
               }).then(() => {
-                window.location.href = "/blog/";
+                window.location.href = "/";
               });
             } else {
               return response.json().then((data) => {
