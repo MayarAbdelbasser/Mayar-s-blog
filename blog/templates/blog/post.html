@@ -46,11 +46,12 @@ Blog
       >
         <button class="dropdown-toggle" id="dropdownBtn">&#8942;</button>
         <div class="dropdown-menu" id="dropdownMenu">
+          <form>{% csrf_token %}</form>
+          <a href="#" id="readLaterLink">Read Later</a>
           <a href="{% url 'post-update' post.slug %}" id="editLink"
             >Edit Post</a
           >
           <a href="#" id="deleteLink" style="color: red">Delete Post</a>
-          <a href="#" id="readLaterLink">Read Later</a>
         </div>
       </div>
     </div>
@@ -67,4 +68,6 @@ Blog
   </div>
 </article>
 
-{% endblock content %}
+{% endblock content %} {% block scripts %}
+<script src="{% static 'blog/post.js' %}"></script>
+{% endblock scripts %}

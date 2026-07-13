@@ -25,7 +25,7 @@ class Author(models.Model):
             )
         ],
     )
-    password = models.CharField(max_length=20, null=True)
+    password = models.CharField(max_length=128, null=True)
 
     def full_name(self):
         return f"{self.first_name.capitalize()} {self.last_name.capitalize()}"

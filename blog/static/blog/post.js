@@ -28,6 +28,72 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // delete post
+  deleteLink.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const postSlug = "{{ post.slug }}";
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // جلب التوكن وتأكدي من الاسم المخزن في الـ localStorage
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          Swal.fire({
+            title: "Error!",
+            text: "You are not logged in. Please log in first.",
+            icon: "error",
+          });
+          return; // بنوقف هنا لو مفيش توكن أصلاً في المتصفح
+        }
+
+        fetch("/api/posts/delete", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            post_slug: postSlug,
+          }),
+        })
+          .then((response) => {
+            if (response.status === 204) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your post has been deleted successfully.",
+                icon: "success",
+              }).then(() => {
+                window.location.href = "/blog/";
+              });
+            } else {
+              return response.json().then((data) => {
+                throw new Error(
+                  data.detail || data.error || "Failed to delete post",
+                );
+              });
+            }
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Error!",
+              text: error.message,
+              icon: "error",
+            });
+          });
+      }
+    });
+  });
+
   readLaterLink.addEventListener("click", function (e) {
     e.preventDefault();
     alert("Added to Read Later!");

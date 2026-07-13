@@ -51,6 +51,7 @@ document
       if (response.ok) {
         // Success: Save tokens to localStorage (or cookies) to use them in future requests
         localStorage.setItem("author_id", data.author_id);
+        localStorage.setItem("token", data.access);
 
         Swal.fire({
           icon: "success",
